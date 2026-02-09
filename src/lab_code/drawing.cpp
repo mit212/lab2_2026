@@ -48,7 +48,7 @@ void loop() {
         // TODO: Use the function you implemented in joystick.cpp to read inputs from the joystick 
         // joystick_reading = 
 
-        // TODO: Scale joystick_reading from range [-1, 1) to range [-M_PI/3.0, M_PI/3.0)
+        // TODO: Scale joystick_reading from range [-1, 1] to range [-M_PI/3.0, M_PI/3.0]
         new_setpoint.theta1 = 0;
         new_setpoint.theta2 = 0;
 

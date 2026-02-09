@@ -1,7 +1,7 @@
 # Lab 2: 2-DoF Robot Assembly
 
 2.12/2.120 Intro to Robotics  
-Spring 2025[^1]
+Spring 2026[^1]
 
 - [1 Hardware Assembly](#1-hardware-assembly)
 - [2 Wiring and Validation](#2-wiring-and-validation)
@@ -100,18 +100,19 @@ Similar to Lab 1, we also need to wire and validate the microcontroller, motors,
 
 ### 2.2 Motors 
 
-1. Wire the motors according to `include/pinout.h`. Remember to wire the `GND` pin of the motor driver to the `-` rail. Make sure that the motor ground wire is connected to the right of the terminal block, and the positive to the left (it should be the same order as the power supply pigtails).
+1. Wire the motor driver board to the microcontroller according to `include/pinout.h`. Remember to wire the `GND` pin of the motor driver to the `-` rail. Make sure that the motor ground wire is connected to the right of the terminal block, and the positive to the left (it should be the same order as the power supply pigtails).
     <details>
     <summary><i> Can I see a wiring diagram?</i>
     </summary>
     It is a good skill to be able to wire motors and sensors without an explicit wiring diagram. That being said, everyone in the class has different levels of experience with wiring components to microcontrollers. If your group is confused or needs guidance, feel free to take a look at the demo setup the TAs have built to see how the wiring was done.
     </details>
 
+2. Connect the motors to the motor driver board. `M1` should correspond to the motor attached to the base and `M2` should correspond to the motor closer to the marker holder. 
 2. Connect the button/switch that has barrel jack connectors between the motor driver and the power supply. This should cut off the power supply's voltage when toggled, acting as an emergency stop.
 3. Reduce the power supply output to around `5.2V`. **Remember, the motors are powerful. Always keep the workspace clear of obstacles (laptops) and hold on to the power supply switch you just connected.**
 4. Confirm that the motor driver has power. The green `PWR` LED should be on. If not, turn on the power supply switch.
-5. Push and hold the `M1A`, `M1B`, `M2A`, `M2B` buttons on the motor driver one at a time to check that the motors can spin in both directions. `M1` should correspond to the motor attached to the base. 
-6. Turn off the power supply switch. The power supply switch should always be off unless the motors need to move.
+5. Push and hold the `M1A`, `M1B`, `M2A`, and `M2B` buttons on the motor driver one at a time to check that the motors can spin in both directions. Make sure that `M1` corresponds to the motor attached to the base. 
+6. Turn off the power supply switch. The green `PWR` LED should be off. The power supply switch should always be off unless the motors need to move.
 7. Make the arm point straight up in full extension. This is the default position the arm should be in **before running any code**. 
 8. Run `motor_drive_test.cpp`. You should see both motors turn slightly in both directions at two different speeds.
     <details>
@@ -125,9 +126,9 @@ Similar to Lab 1, we also need to wire and validate the microcontroller, motors,
 
 ### 2.3 Encoders 
 
-1. Wire the encoders according to `include/pinout.h`. Use an extension cable for encoder 2.
-2. Use zip ties to attach the wires encoder 2 to link 1 so that `M1` can rotate freely without snagging wires.
-3. Run `encoder_basic_test.cpp` and open the Serial Monitor. Observe which turn directions make the encoder count increase and think about why this is the case.
+1. Wire the encoders according to `include/pinout.h`. Use extension jumper cables for encoder 2.
+2. Use zip ties to attach the encoder 2 wires to link 1 so that `M1` can rotate freely without snagging wires.
+3. Run `encoder_basic_test.cpp` and open the Serial Monitor. Move the robot links by hand, observe which turn directions make the encoder counts increase, and think about why this is the case.
 4. Run `encoder_test.cpp`. Confirm that the position increases when turning link 1 counter-clockwise looking down at the table and decreases when turning link 2 counter-clockwise looking down at the table.
 
 | :white_check_mark: CHECKOFF 1 :white_check_mark:   |
@@ -145,13 +146,14 @@ If you have any feedback, please fill out the form here: https://forms.gle/GXQCm
 Now that we have a validated 2-DoF robot, let's add a joystick to control it.
 
 1. Wire the joystick according to pinout.h: connect `U/D+` and `L/R+` to the `3.3v` rail, the two `GND` pins to the ground rail, one `L/R` to XPIN, and one `U/D` to YPIN.
-2. To validate that you can read the joystick input, run `joystick_test.cpp` and open the Serial Monitor. You should see joystick readings in the range `[-1, 1)`.
+2. To validate that you can read the joystick input, run `joystick_test.cpp` and open the Serial Monitor. You should see joystick readings in the range `[-1, 1]`.
 
 ### X.2 Moving in Joint Space
 
 With the joystick in place, we can then use code to connect the joystick reading to the robot motion.
 
 ### X.2.1 Refactoring Code
+We will now refactor our joystick control code to have a structure that employs multiple files. Though this might seem more confusing at first, it makes our code more modular, so that multiple programs can share the same functions without copy-and-pasting code in each program file.
 
 1. Open `include/joystick.h` and define a `struct` to store the `x` and `y` values of a joystick reading as floats.
     <details>
@@ -164,27 +166,27 @@ With the joystick in place, we can then use code to connect the joystick reading
       float gpa;
     };
 
-    Student bob = {1, 2.0}; // Initializes a Student variable called bob with id 1 and gpa 2.0
-    bob.gpa = 2.3; // Updates the gpa member of bob to 2.3
+    Student bob = {1, 2.0}; // Initializes a Student variable called bob with id = 1 and gpa = 2.0
+    bob.gpa = 2.3; // Updates the gpa member of bob to 2.3. Good job, bob!
     Serial.printf("GPA: %.2f\n", bob.gpa); // Prints the new gpa 2.3 in the Serial Monitor
     ```
     </details>
 
-2. Open `lab_code/joystick.cpp` and complete the `TODO`s. 
-3. Open `test_code/joystick_test.cpp` and complete the `TODO`s. 
-4. Move `joystick_test.cpp` and `joystick.cpp` to the `robot/` directory. 
+2. Open `src/lab_code/joystick.cpp` and complete the `TODO`s. 
+3. Open `src/test_code/joystick_test.cpp` and complete the `TODO`s. 
+4. Move `joystick_test.cpp` and `joystick.cpp` to the `src/robot/` directory. 
 5. Run the new `joystick_test.cpp` and open the Serial Monitor. Confirm that your joystick readings are the same as before. 
     
 ### X.2.2 Commanding the Robot
 
-Open `lab_code/drawing.cpp` and complete all the `TODO`s. At a high level, the code should do the following:
+Open `src/lab_code/drawing.cpp` and complete all the `TODO`s. At a high level, the code should do the following:
    - reads the joystick
-   - scales the joystick reading from `[-1, 1)` to `[-pi/2, pi/2)`
+   - scales the joystick reading from `[-1, 1]` to `[-pi/3, pi/3]`
    - feeds the joystick reading to a position setpoint
    - smoothes the position setpoint using exponential smoothing
    - drives the motor using a PID controller
 
-Simply put, the x-axis of the joystick controls the velocity of motor 1 and the y-axis of the joystick controls the velocity of motor 2. This is joint space!
+Simply put, the x-axis of the joystick controls the position of motor 1 and the y-axis of the joystick controls the position of motor 2. This is joint space!
 
 ### X.2.3 Draw A Line
 Attach a marker to the end of your 2-DoF robot and try drawing a straight line on your whiteboard. Make sure to move 2 files `drawing.cpp` and `joystick.cpp` from `lab_code/` to `robot/`, and move `joystick_test.cpp` out of `robot/`.
@@ -198,3 +200,4 @@ Attach a marker to the end of your 2-DoF robot and try drawing a straight line o
   Version 3 - 2024: Ravi Tejwani, Kentaro Barhydt  
   Version 4 - 2024: Jinger Chong, Josh Sohn  
   Version 5 - 2025: Roberto Bolli, Kaleb Blake
+  Version 6 - 2026: Stephan Stansfield
