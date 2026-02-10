@@ -137,7 +137,7 @@ Similar to Lab 1, we also need to wire and validate the microcontroller, motors,
 
 ## 3 Feedback Form
 
-If you have any feedback, please fill out the form here: https://forms.gle/GXQCmbxuda3mm2cy6
+If you have any feedback, please fill out the form here: https://forms.gle/VLxeXP1vouj3qx9N7
 
 ## X Optional
 
