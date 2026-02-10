@@ -37,6 +37,12 @@ Materials:
 - [hex nuts (M4)](https://www.gobilda.com/2811-series-zinc-plated-steel-hex-nut-m4-x-0-7mm-7mm-hex-25-pack/)
 - marker holder
 
+<details>
+    <summary><i> Note </i>
+    </summary>
+    If you are interested in seeing what the final completed build for today's lab will look like, scroll to the end of the page.
+</details>
+
 Steps:
 1. Attach the 2 motors on either end of a single arm link (Fig. 2).
     <p align=center>
@@ -194,6 +200,26 @@ Attach a marker to the end of your 2-DoF robot and try drawing a straight line o
 | :white_check_mark: CHECKOFF 2 :white_check_mark:   |
 |:---------------------------------------------------|
 | Show your work of art to a TA or LA! |
+
+_____________________________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________________________
+Below are photos of completed setup, for reference purposes:
+
+<p align=center>
+  <img src=./.images/straight_arm.png width=600>
+</p>
+<p align=center>
+  <em> Figure 6: Straight arm </em>
+</p>
+
+<p align=center>
+  <img src=./.images/bent_arm.png width=600>
+</p>
+<p align=center>
+  <em> Figure 7: Bent arm </em>
+</p>
+
+
 
 [^1]: Version 1 - 2020: Rachel Hoffman  
   Version 2 - 2024: Phillip Daniel  
